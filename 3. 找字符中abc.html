@@ -1,0 +1,83 @@
+<!-- 不使用JS内置API处理 -->
+<html>
+  <script>
+    // 判断是否存在字符 abc
+    let str = "c90239aabc";
+
+    console.log("------- 方式一：");
+    console.log(find(str));
+
+    console.log("------- 方式二：");
+    console.log(find2(str));
+
+    // 方式一：使用变量去存储状态
+    function find(str) {
+      let isFindA = false;
+      let isFindB = false;
+
+      // 遍历每个字符去判断
+      for (let c of str) {
+        console.log(c);
+        if (c == "a") {
+          isFindA = true;
+        } else if (isFindA && c === "b") {
+          isFindB = true;
+        } else if (isFindB && c === "c") {
+          return true;
+        } else {
+          isFindA = false;
+          isFindB = false;
+        }
+      }
+      return false;
+    }
+
+    // 方式二：使用函数做机器
+    function find2(str) {
+      let state = start;
+      for (let c of str) {
+        console.log(c);
+        state = state(c);
+
+        if (state == end) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // 最开始的查找函数
+    function start(c) {
+      if (c === "a") {
+        return foundB;
+      } else {
+        return start;
+      }
+    }
+
+    // 结束函数，也可以不用该函数，在foundC中再return foundC也行
+    function end(c) {
+      return end;
+    }
+
+    // 找到了A，现在找B
+    function foundB(c) {
+      if (c === "b") {
+        return foundC;
+      } else {
+        // 为了解决 aabc 开始有两个a的问题，需要将当前字符再次传到start去判断，这样就不会有问题
+        // 不然会这样：找到a，然后去准备找b，发现没有b（因为它是第二个a），然后又用 start 去找下一个,此时已经到b 这个位置了，就找不到abc了
+        return start(c);
+      }
+    }
+
+    // 找到了B，现在找C
+    function foundC(c) {
+      if (c === "c") {
+        return end;
+      } else {
+        return start(c);
+      }
+    }
+  </script>
+</html>

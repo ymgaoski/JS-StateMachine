@@ -1,0 +1,27 @@
+<!-- 不使用JS内置API处理 -->
+<html>
+  <script>
+    // 判断是否存在字符 ab
+    let str = 'c90239abc';
+
+    console.log(find(str));
+
+    // 使用变量去存储状态
+    function find(str){
+      let isFindA = false;
+     
+      // 遍历每个字符去判断
+      for (let c of str) {
+        console.log(c);
+        if (c == 'a'){
+          isFindA = true;
+        }else if(isFindA && c === 'b'){
+          return true;
+        }else{
+          isFindA = false;
+        }
+      }
+      return false;
+    }
+  </script>
+</html>
